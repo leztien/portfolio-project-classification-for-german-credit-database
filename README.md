@@ -29,12 +29,6 @@ https://www.kaggle.com/code/kabure/predicting-credit-risk-model-pipeline?scriptV
 
 ## TODO:
 - EDA
-
-- re 
-- give descriptive names to the columns
-- decode: make a user-friendly dataframe for EDA
-
-
 - ML model
 
 
