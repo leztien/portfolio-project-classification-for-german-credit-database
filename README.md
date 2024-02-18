@@ -68,6 +68,9 @@ $ pip install -r requirements.txt
 $ uvicorn main:app --reload
 ```
 
+### ML Project checklis:
+https://github.com/leztien/handson-ml3-forked/blob/main/ml-project-checklist.md
+
 
 
 
