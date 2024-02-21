@@ -7,7 +7,7 @@
 
 ## Details
 
-- target: binary (good vs bad credits)
+- target: binary (good vs bad loans / customers)
 - 20 features (7 numerical, 13 categorical)
 - 1000 records
 
@@ -75,9 +75,6 @@ $ source .venv/bin/activate
 $ pip install -r requirements.txt
 $ uvicorn main:app --reload
 ```
-
-### ML Project checklis:
-https://github.com/leztien/handson-ml3-forked/blob/main/ml-project-checklist.md
 
 
 
