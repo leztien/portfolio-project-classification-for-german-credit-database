@@ -5,13 +5,21 @@
 [exploratory_data_analysis.ipynb](/exploratory_data_analysis.ipynb)
 
 
+## Details
+
+- target: binary (good vs bad credits)
+- 20 features (7 numerical, 13 categorical)
+- 1000 records
+
+
+
 ## Dataset description:
 The German Credit dataset provides insights into the factors that financial institutions consider when determining the creditworthiness of an applicant. Featuring a mix of numerical and categorical attributes, this dataset presents opportunities for various forms of data analysis, machine learning, and prediction modeling. By understanding the correlations and patterns within this data, one can develop predictive models to determine the likelihood of an approval based on an applicant’s credit, or even spot potential biases in the credit decision-making process.
 
 The dataset has been sourced from Professor Dr. Hans Hofmann of the Universität Hamburg. It comprises 1000 instances with attributes capturing an applicant’s financial behavior, history, and personal details. For instance, it includes attributes such as the status of the applicant’s checking account, credit history, purpose for the loan, and personal information like age and job type. Two versions of the dataset are provided: the original dataset (german.data), which contains a mix of numerical and categorical attributes, and a modified dataset (german.data-numeric), formatted for algorithms that prefer numerical input, wherein categorical variables have been transformed into numerical indicators.
 
 
-## Information about the dataset:
+## More info about the dataset:
 [info](/data/german.doc)
 
 https://archive.ics.uci.edu/dataset/144/statlog+german+credit+data
