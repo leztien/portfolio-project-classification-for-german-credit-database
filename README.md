@@ -77,5 +77,9 @@ $ uvicorn main:app --reload
 ```
 
 
+### Checklist:
+https://github.com/ageron/handson-ml3/blob/main/ml-project-checklist.md
+
+
 
 
