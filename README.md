@@ -37,7 +37,8 @@ https://www.kaggle.com/code/kabure/predicting-credit-risk-model-pipeline?scriptV
 
 ## TODO:
 - EDA
-- ML model
+- ML model, ensemble
+- post on Kaggle
 
 
 ## The usual "shell preparations":
