@@ -6,4 +6,6 @@ statsmodels
 jupyter
 seaborn
 fastapi[all]
+lightgbm
+
 

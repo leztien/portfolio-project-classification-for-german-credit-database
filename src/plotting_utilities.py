@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from math import sqrt, ceil
+from sklearn.metrics import confusion_matrix
 
 
 
@@ -147,3 +148,36 @@ def make_barcharts(df, features, annotations=True, square=True, figsize=(14,10))
     plt.subplots_adjust(wspace=0.2, hspace=0.4)
 
     return fig
+
+
+def plot_probabilities_distributions(model, X, y, threshold=0.5, n_bins=50, alpha=0.5, plot_confusion_matrix=True):
+    """
+    Make distributions of probabilities for true and false predictions
+    """
+
+    ytrue = np.array(y)
+    ppred = model.predict_proba(X)[:,-1]
+    ypred = (ppred >= threshold).astype(int)
+    mask = ytrue == ypred
+
+    height = max([
+        max(plt.hist(ppred[mask], bins=n_bins, alpha=alpha, color='green', label="true predictions")[0]),
+        max(plt.hist(ppred[~mask], bins=n_bins, alpha=alpha, color='red', label="false predictions")[0])
+    ])
+
+    plt.xlim([0,1])
+    plt.vlines(threshold, ymin=0, ymax=height/2, color='grey', label="threshold")
+    plt.legend()
+    plt.title(f"Distribution of probabilities by {model[-1].__class__.__name__}")
+
+    # confusion matrix
+    if plot_confusion_matrix:
+        ax = plt.axes([0.4, 0.62, 0.2, 0.2])  # [left, bottom, width, height]
+        #ypred = cross_val_predict(model, X, ytrue, cv=5)
+        cm = confusion_matrix(ytrue, ypred)
+        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=False, ax=ax, linecolor='k')
+        ax.set_xlabel('Predicted', fontsize=9)
+        ax.set_ylabel('Actual', fontsize=9)
+        ax.set_title("Confusion Matrix", fontsize=10)
+        ax.set_facecolor('grey')
+    return #plt.gca()
