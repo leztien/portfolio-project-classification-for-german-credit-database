@@ -7,5 +7,8 @@ jupyter
 seaborn
 fastapi[all]
 lightgbm
+pygraphviz
+networkx
+pydot
 
 
