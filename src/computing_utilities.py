@@ -26,3 +26,23 @@ def optimize_threshold(model, X, y, val_size=0.2, metric='f2', random_state=None
     scores = [metric(y_val, (probs >= thresh).astype(int)) for thresh in thresholds]
 
     return thresholds[np.argmax(scores)], max(scores)
+
+
+
+
+def error_sets_difference(y_true, y_pred_a, y_pred_b, error_type=None):
+    y_true, y_pred_a, y_pred_b = (np.array(a) for a in (y_true, y_pred_a, y_pred_b))
+
+    if str(error_type).upper() == 'FN':
+        a = (y_true == 1) & (y_pred_a == 0)
+        b = (y_true == 1) & (y_pred_b == 0)
+
+    elif str(error_type).upper() == 'FP':
+        a = (y_true == 0) & (y_pred_a == 1)
+        b = (y_true == 0) & (y_pred_b == 1)
+    else:
+        a = y_true != y_pred_a
+        b = y_true != y_pred_b
+
+    similariry = sum(a & b) / sum(a | b)
+    return 1 - similariry

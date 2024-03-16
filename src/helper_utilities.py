@@ -6,10 +6,31 @@ Various utilities
 
 import numpy as np
 import pandas as pd
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 
 
-def load_data(mode='analysis', format=None):
+def _introduce_nans(df, proportion=None, random_state=None):
+
+    if not proportion:
+        return df
+    
+    proportion = float(proportion)
+
+    rs = np.random.RandomState(random_state)
+    nx = rs.permutation(df.size)[:int(df.size * proportion)]
+
+    d = defaultdict(list)
+    modulo = df.shape[1]
+
+    for ix in nx:
+        d[ix % modulo].append(ix // modulo)
+
+    for j in d:
+        df.iloc[d[j], j] = np.nan
+    return df
+
+
+def load_data(mode='analysis', format=None, introduce_nans=False, random_state=None):
     arg_values = dict(mode=['analysis', 'model', 'predict'],
                       format=[('dataframe', 'df', pd.DataFrame), ('numpy', 'array', 'nd', 'ndarray', 'matrix', np.array, np.ndarray)])
     mode = ([s for s in arg_values['mode'] if s in str(mode).lower()] + [None])[0]
@@ -20,14 +41,20 @@ def load_data(mode='analysis', format=None):
     if mode=='predict':
         # substitute with real code
         df = pd.read_csv('data/german.data', delimiter=' ', header=None).iloc[:, :20]  # the first 20 columns
+        df = _introduce_nans(df, proportion=introduce_nans, random_state=random_state)
         return df if format=='dataframe' else df.values
     
     # otherwise
     df = pd.read_csv('data/german.data', delimiter=' ', header=None)
+    df = _introduce_nans(df, proportion=introduce_nans, random_state=random_state)
     
     if mode=='model':
         df.iloc[:, -1] = df.iloc[:, -1] - 1
         X, y = df.iloc[:, :-1], df.iloc[:, -1]
+
+        # exclude the records which contain nan's in the target
+        mask = y.notnull()
+        X,y = X[mask], y[mask]
         return (X,y) if format=='dataframe' else (X.values, y.values)
     
     if mode=='analysis':

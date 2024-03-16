@@ -10,5 +10,8 @@ lightgbm
 pygraphviz
 networkx
 pydot
+missingno
+imblearn
+
 
 

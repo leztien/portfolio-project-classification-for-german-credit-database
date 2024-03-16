@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.metrics import (accuracy_score, recall_score, precision_score, fbeta_score, roc_auc_score, classification_report)
+from sklearn.metrics import roc_auc_score
 
 
 class Baseline(ClassifierMixin, BaseEstimator):
@@ -59,7 +60,7 @@ def classification_scores(y_true, y_pred, round=True) -> pd.Series:
 
 
 
-def f2(*args):
+def f2_scorer(*args):
     """
     Works both as a scorer e.g. for cross_val_score -> implicit signature: (estimator, X, y)
     and 'f2_score'  -> implicit signature: (y_true, y_pred)
@@ -68,3 +69,18 @@ def f2(*args):
         return fbeta_score(*args, beta=2)
     est, X, y = args
     return fbeta_score(y, est.predict(X), beta=2)
+
+
+def auc_scorer__detele_me(clf, X, y):
+    y_pred = clf.predict_proba(X)[:, 1]
+    return roc_auc_score(y, y_pred)
+
+
+def auc_scorer(*args):
+    """
+    analogoues to f2_scorer
+    """
+    if len(args) == 2:
+        return roc_auc_score(*args)
+    clf, X, y = args
+    return roc_auc_score(y, clf.predict_proba(X)[:, 1])
