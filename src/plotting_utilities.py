@@ -171,7 +171,7 @@ def plot_probabilities_distributions(model, X, y, threshold=0.5, n_bins=50, alph
     plt.xlim([0,1])
     plt.vlines(threshold, ymin=0, ymax=height/2, color='grey', label="threshold")
     plt.legend()
-    plt.title(f"Distribution of probabilities by {model[-1].__class__.__name__}")
+    plt.title(f"Distribution of predicted probabilities\nby {(model[-1] if hasattr(model, '__len__') else model).__class__.__name__}")
 
     # confusion matrix
     if plot_confusion_matrix:
