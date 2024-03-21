@@ -71,11 +71,6 @@ def f2_scorer(*args):
     return fbeta_score(y, est.predict(X), beta=2)
 
 
-def auc_scorer__detele_me(clf, X, y):
-    y_pred = clf.predict_proba(X)[:, 1]
-    return roc_auc_score(y, y_pred)
-
-
 def auc_scorer(*args):
     """
     analogoues to f2_scorer
