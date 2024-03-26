@@ -35,7 +35,12 @@ import requests
 
 
 app = FastAPI()
-model = joblib.load('models/bestmodel.pkl')
+model = joblib.load('models/best_model.pkl')
+
+
+def predict(data, model=model, threshold=0.37373737373737376):
+    """Note that only the 0'th element gets to be returned"""
+    return int((model.predict_proba([list(data)])[:, -1] >= threshold).astype(int)[0])
 
 
 class Data(BaseModel):
@@ -56,15 +61,7 @@ class Data(BaseModel):
 
 @app.post("/predict")
 async def process_data(data: Data):
-    result = {"prediction": model.predict([data.values]).astype(int).tolist()[0]}
-    return result
-
-
-@app.get("/predict", response_class=HTMLResponse)
-async def predict(data: Data):
-    "http://127.0.0.1:8000/predict?x1=-7.25&x2=1"
-    ypred = model.predict([data.values]).astype(int).tolist()[0]
-    return HTMLResponse(f"Our prediction: {ypred}")
+    return {"prediction": predict(data.values)}
 
 
 @app.get("/")
@@ -72,11 +69,10 @@ async def root():
     return HTMLResponse("Hello World")
 
 
-
-
 if __name__ == '__main__':
     uvicorn.run(app, host='127.0.0.1', port=8000)
 # or bash: $ uvicorn main:app --reload
+
 
 
 # POST request: run this in  a different cell while the server is on
