@@ -2,7 +2,7 @@
 
 
 ## Jupyter notebook with EDA:
-[exploratory_data_analysis.ipynb](/exploratory_data_analysis.ipynb)
+[exploratory data analysis](/1_exploratory_data_analysis.ipynb)
 
 
 ## Details
